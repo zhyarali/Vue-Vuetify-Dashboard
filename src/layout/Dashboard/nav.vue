@@ -346,6 +346,7 @@
     --bgdarkblue: #1e1e2f;
     --darknavbar: #27293d;
     --another: #27293d;
+     --comp: #27293d;
   }
 
   .account,
