@@ -27,7 +27,7 @@
                 </v-row>
 
                 <v-row class="my-8 rabar-font">
-                    <v-col cols="" md="" class="d-flex justify-center">
+                    <v-col cols="12" md="" class="d-flex justify-center flex-wrap">
                         <div class="mx-16">
                             <p>ژمارەی پۆستەکان : {{user.post}}</p>
                         </div>
@@ -60,9 +60,9 @@
                                 </v-btn>
                                 <v-spacer></v-spacer>
                                 <v-toolbar-items>
-                                    <v-btn dark text class="rabar-font">
+                                    <v-btn @click="update_profile()" dark text class="rabar-font">
                                         <v-icon>mdi-account-edit</v-icon>
-                                        گۆڕانکاری
+                                        سەیڤ
                                     </v-btn>
                                 </v-toolbar-items>
                             </v-toolbar>
@@ -195,6 +195,10 @@
                 this.users[0].logo = URL.createObjectURL(file);
 
                 // do something
+            },
+            update_profile(){
+                // code in here
+                this.edit_dialog=false
             }
         }
     }
