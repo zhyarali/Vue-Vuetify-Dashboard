@@ -1,7 +1,6 @@
 <template lang="">
   <div>
 
-
     <v-app-bar app color="zhyar" class="navbar">
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
@@ -224,7 +223,7 @@
       textcolor: '#FFFFFF',
       swatches: [
         "#343A40",
-        "#293B5F",
+        "#27293d",
         "#DDDDDD",
         "#16C79A",
         "#7579E7",
@@ -313,6 +312,8 @@
       getFont(){
          return this.$store.getters.selectFont
       },
+     
+   
       
 
     }
@@ -397,11 +398,11 @@
 
 
   .theme--light .v-list .v-list-item--active .v-icon {
-    color: var(--navbar-color);
+    color: var(--bg-change-setting) !important;
   }
 
   .theme--light .v-list .v-list-item--active .v-list-item__title {
-    color: var(--navbar-color) !important;
+    color: var(--bg-change-setting) !important;
   }
 
 
@@ -449,7 +450,7 @@
   .theme--light.v-app-bar.v-toolbar.v-sheet,
   .theme--light.v-app-bar .v-toolbar__content,
   .v-toolbar__extension {
-    background: var(--another) !important;
+    background: var(--bg-change-setting) !important;
   }
 
   .v-toolbar__extension,
@@ -463,7 +464,7 @@
   .theme--dark.v-app-bar.v-toolbar.v-sheet,
   .theme--dark .v-toolbar__content,
   .v-toolbar__extension {
-    background: var(--another) !important;
+    background: var(--bg-change-setting)  !important;
   }
 
   .theme--light .navbar .v-btn.v-btn--icon {
@@ -518,12 +519,12 @@
 
 /* footer */
 .theme--light.v-footer{
-  background: var(--another) !important;
+  background: var(--bg-change-setting)  !important;
   color: white !important;
 }
 
 .theme--dark.v-footer{
-  background: var(--another) !important;
+  background: var(--bg-change-setting)  !important;
   color: white !important;
 }
 

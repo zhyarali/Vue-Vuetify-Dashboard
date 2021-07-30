@@ -76,7 +76,7 @@
                                                 :src="users[0].logo">
 
                                                 <div>
-                                                    <v-btn color="deep-purple" class="text-none" depressed
+                                                    <v-btn color="deep-purple" class="text-none white--text" depressed
                                                         :loading="isSelecting" @click="onButtonClick"
                                                         style="width:100%;position:absolute;bottom:0px;font-size:10px">
                                                         <v-icon left>

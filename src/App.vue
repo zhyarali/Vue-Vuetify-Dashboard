@@ -1,6 +1,5 @@
 <template>
-  <v-app id="inspire" >
-
+  <v-app id="inspire" :style="cssProps">
     <v-main>
        <router-view></router-view>
     </v-main>
@@ -10,7 +9,18 @@
 
 
 <script>
-
+export default {
+  computed:{
+      cssProps(){
+       
+        localStorage['bg']=this.$store.getters.navbar_color;
+       return {'--bg-change-setting':this.$store.getters.navbar_color}
+     }
+  },
+  mounted(){
+     localStorage.setItem('bg','#27293d')
+  }
+}
 </script>
 
 

@@ -3,7 +3,7 @@
         <navbar ></navbar>
 
 
-        <v-row style="display:flex;justify-content:center" >
+        <v-row class="setting" style="display:flex;justify-content:center" >
             <v-col lg="7" sm="10" cols="11" class="py-10 ">
 
                 <v-card class="setting-card">
@@ -31,7 +31,7 @@
 
                     <v-divider></v-divider>
 
-                    <v-list subheader three-line>
+                    <!-- <v-list subheader three-line>
                         <v-subheader class="theme-text">فۆنت</v-subheader>
                         <v-list-item>
                             <v-list-item-avatar>
@@ -51,7 +51,7 @@
                             </v-list-item-action>
                         </v-list-item>
 
-                    </v-list>
+                    </v-list> -->
 
                     <v-divider></v-divider>
 
@@ -70,11 +70,11 @@
 
                             <v-list-item-action>
 
+                                <v-swatches  class="mx-5 " :swatches="swatches" v-model="textcolor"></v-swatches>
 
-                                <v-swatches  class="mx-5 my-5" elevation="10" :swatches="swatches"
-                                    v-model="backcolor"></v-swatches>
+                                <!-- <v-swatches  class="mx-5 my-5" elevation="10" :swatches="swatches"
+                                    v-model="sidecolor"></v-swatches> -->
 
-                                <v-swatches class="mx-5 " :swatches="swatches" v-model="textcolor"></v-swatches>
 
                             </v-list-item-action>
                         </v-list-item>
@@ -84,7 +84,11 @@
                 </v-card>
 
             </v-col>
+
+            
         </v-row>
+
+   
 
         <dashboardFooter/>
     </div>
@@ -101,16 +105,17 @@
         props: ['items'],
         data() {
             return {
+                saveColor:localStorage.getItem('bg'),
                 switchBtn: false,
                 fonts: ['Rabar', 'Rudaw', 'NRT'],
                 selectFont: '',
                 sfont:'',
-                 backcolor: '#8366FC',
-                    textcolor: '#EEEDF7',
+                 sidecolor: this.$store.getters.sidebar_color,
+                    textcolor: this.$store.getters.navbar_color,
                     swatches: [
                         "#343A40",
-                        "#293B5F",
-                        "#DDDDDD",
+                        "#27293d",
+                        "#413C69",
                         "#16C79A",
                         "#7579E7",  
                         "#52575D",
@@ -118,7 +123,7 @@
                         "#30475E",
                         "#4D80E4",
                         "#F35588",
-                        "#FFFFFF",
+                        "#865858",
                     ]
             }
         },
@@ -148,7 +153,10 @@
                  localStorage.setItem("selectFont",value)
                  this.$store.state.selectFont=localStorage.getItem("selectFont")
                  this.sfont=this.$store.getters.selectFont
-            }
+            },
+            textcolor(value){
+                this.$store.state.navbar_color=value
+            } 
         }
        
         
@@ -161,11 +169,18 @@
 <style>
 .setting-card{
     border-radius:10px !important;
+    /* here */
     
 }
-
+.setting{
+    margin-top: 55px !important;
+}
 .theme--dark.v-list{
 background: var(--another)  !important;
+}
+
+.vue-swatches__trigger{
+    border: 1px solid white !important;
 }
 
 

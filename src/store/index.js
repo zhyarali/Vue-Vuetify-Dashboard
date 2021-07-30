@@ -31,7 +31,9 @@ export default new Vuex.Store({
     ],
     success_reset: false,
     email_forget: '',
-    selectFont:'rabar'
+    selectFont:'rabar',
+    navbar_color: localStorage.getItem('bg'),
+    sidebar_color: localStorage.getItem('sidebarColor'),
   },
   getters: {
     getUser: state => {
@@ -45,6 +47,9 @@ export default new Vuex.Store({
     },
     selectFont:state=>{
       return state.selectFont
+    },
+    navbar_color:state=>{
+      return state.navbar_color
     }
   },
 
