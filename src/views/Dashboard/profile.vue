@@ -42,99 +42,131 @@
             </div>
 
 
-            <!-- edit  -->
-            <v-row>
-                <v-col class="d-flex justify-center">
-                    <v-dialog v-model="edit_dialog" fullscreen>
-                        <template v-slot:activator="{ on, attrs }">
-                            <v-btn v-bind="attrs" v-on="on"
-                                class="rabar-font btn-action deep-purple radius-10 white--text">
-                                <v-icon>mdi-account-edit</v-icon>
-                                گۆڕانکاری
-                            </v-btn>
-                        </template>
-                        <v-card class="rabar-font radius-15 py-5 ">
-                            <v-toolbar dark color="primary">
-                                <v-btn icon dark @click="edit_dialog = false">
-                                    <v-icon>mdi-close</v-icon>
-                                </v-btn>
-                                <v-spacer></v-spacer>
-                                <v-toolbar-items>
-                                    <v-btn @click="update_profile()" dark text class="rabar-font">
-                                        <v-icon>mdi-account-edit</v-icon>
-                                        سەیڤ
-                                    </v-btn>
-                                </v-toolbar-items>
-                            </v-toolbar>
-
-                            <v-card-text>
-                                <v-container>
-                                    <v-row class="d-flex justify-center">
-
-                                        <v-col cols="" lg="12" md="" class="my-8">
-                                            <v-img width="140" height="140" class="image-preview mx-auto radius-circle"
-                                                :src="users[0].logo">
-
-                                                <div>
-                                                    <v-btn color="deep-purple" class="text-none white--text" depressed
-                                                        :loading="isSelecting" @click="onButtonClick"
-                                                        style="width:100%;position:absolute;bottom:0px;font-size:10px">
-                                                        <v-icon left>
-                                                            {{icon}}
-                                                        </v-icon>
-                                                        وێنە بگۆڕە
-                                                    </v-btn>
-                                                    <input ref="uploader" class="d-none" type="file" accept="image/*"
-                                                        @change="onFileChanged">
-                                                </div>
-                                            </v-img>
-                                        </v-col>
 
 
-                                        <v-col v-for="(user,index) in users" :key="index" cols="12" lg="5" class="my-3">
-                                            <v-text-field outlined label="ناو" v-model="user.name"
-                                                class="rabar-font radius-10">
-                                            </v-text-field>
+            <v-row style="display:flex;justify-content:center">
+   
 
-
-
-
-
-                                            <v-text-field outlined label="ناوی بەکارهێنەر" v-model="user.username"
-                                                class="rabar-font radius-10">
-                                            </v-text-field>
-
-
-                                            <v-text-field outlined label="ئیمەیڵ" v-model="user.email" required
-                                                class="rabar-font radius-10">
-                                            </v-text-field>
-
-
-                                            <v-text-field outlined label="وشەی نهێنی" v-model="user.password"
-                                                class="rabar-font radius-10" required
-                                                :append-icon="show ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
-                                                name="password" :type="show ? 'input' : 'password'" hide-details="auto"
-                                                @click:append="show = !show">
-
-                                            </v-text-field>
-
-
-
-
-                                        </v-col>
-
-
-
-                                    </v-row>
-                                </v-container>
-
-                            </v-card-text>
-
-                        </v-card>
-                    </v-dialog>
-                </v-col>
-            </v-row>
-            <!-- end edit -->
+   <v-col class="col-11 col-sm-10 col-md-6 col-lg-4 col-xl-6 m-auto text-center">
+   <v-card class="px-5 py-5 rounded-lg">
+     <v-form
+       ref="form"
+       lazy-validation
+       class="text-center"
+     >
+       <v-text-field
+         v-model="name"
+         label="Name"
+         required
+       ></v-text-field>
+   
+       <v-btn
+       small
+         color="deep-purple"
+         class="m-auto white--text"
+         
+       >
+         Change Name
+       </v-btn>
+   
+     </v-form>
+   </v-card>
+   </v-col>
+   
+   
+   <v-col class="col-11 col-sm-10 col-md-6 col-lg-4 col-xl-6 m-auto text-center">
+   <v-card class="px-5 py-5 rounded-lg">
+     <v-form
+       ref="form"
+       lazy-validation
+       class="text-center"
+     >
+       <v-text-field
+         v-model="email"
+         label="Email"
+         required
+       ></v-text-field>
+   
+       <v-btn
+       small
+         color="deep-purple"
+         class="m-auto white--text"
+        
+       >
+         Change Email
+       </v-btn>
+   
+     </v-form>
+   </v-card>
+   </v-col>
+   
+   
+   <v-col class="col-11 col-sm-10 col-md-6 col-lg-4 col-xl-6 m-auto text-center">
+   <v-card class="px-5 py-5 rounded-lg">
+     <v-form
+      @submit.prevent=""
+       ref="form"
+       lazy-validation
+       class="text-center"
+     >
+       <v-file-input
+         v-model="avatar"
+         id="profileAvatar"
+         name="avatar"
+        label="Avatar"
+         required
+         prepend-icon="mdi-camera"
+       ></v-file-input>
+   
+       <v-btn
+       :disabled="avatar==null"
+       small
+       type="submit"
+         color="deep-purple"
+         class="m-auto white--text"
+       >
+          Change Avatar
+       </v-btn>
+   
+     </v-form>
+   </v-card>
+   </v-col>
+   
+   
+   
+   <v-col class="col-11 col-sm-10 col-md-6 col-lg-6 col-xl-6 m-auto text-center">
+   <v-card class="px-5 py-5 rounded-lg">
+     <v-form
+       ref="form"
+       lazy-validation
+       class="text-center"
+     >
+       <v-text-field
+         v-model="oldpassword"
+        label="Old Password"
+         required
+       ></v-text-field>
+   
+       <v-text-field
+         v-model="newpassword"
+         label="New Password"
+         required
+       ></v-text-field>
+       <v-btn
+       small
+         color="deep-purple"
+         class="m-auto white--text"
+         
+       >
+         <!-- {{langkeyword('CHANGE_PASSWORD')}} -->
+         Change Password
+       </v-btn>
+   
+     </v-form>
+   </v-card>
+   </v-col>
+   
+   </v-row>
 
 
 

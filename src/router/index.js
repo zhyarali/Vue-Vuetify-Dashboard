@@ -34,6 +34,18 @@ const routes = [
     component: ClientHome
   },
 
+
+
+
+
+
+
+
+
+
+
+  
+
   // dashboard
   {
     path: '/Dashboard/home',

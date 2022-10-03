@@ -29,7 +29,7 @@
 
                     </v-list>
 
-                    <v-divider></v-divider>
+                    <!-- <v-divider></v-divider> -->
 
                     <!-- <v-list subheader three-line>
                         <v-subheader class="theme-text">فۆنت</v-subheader>
@@ -53,9 +53,9 @@
 
                     </v-list> -->
 
-                    <v-divider></v-divider>
+                    <!-- <v-divider></v-divider> -->
 
-                    <v-list subheader three-line>
+                    <!-- <v-list subheader three-line>
                         <v-subheader class="theme-text">ڕوکاری بەرنامە</v-subheader>
                         <v-list-item>
                             <v-list-item-avatar>
@@ -72,14 +72,14 @@
 
                                 <v-swatches  class="mx-5 " :swatches="swatches" v-model="textcolor"></v-swatches>
 
-                                <!-- <v-swatches  class="mx-5 my-5" elevation="10" :swatches="swatches"
-                                    v-model="sidecolor"></v-swatches> -->
+                                <v-swatches  class="mx-5 my-5" elevation="10" :swatches="swatches"
+                                    v-model="sidecolor"></v-swatches>
 
 
                             </v-list-item-action>
                         </v-list-item>
 
-                    </v-list>
+                    </v-list> -->
 
                 </v-card>
 
@@ -95,8 +95,7 @@
 </template>
 
 <script>
-      import VSwatches from 'vue-swatches'
-      import 'vue-swatches/dist/vue-swatches.css'
+
 
     import navbar from '../../layout/Dashboard/nav.vue'
     import dashboardFooter from '../../layout/Dashboard/dashboardFooter.vue'
@@ -128,7 +127,7 @@
             }
         },
         components: {
-            navbar,VSwatches,dashboardFooter
+            navbar,dashboardFooter
         },
         methods: {
             darkmode() {

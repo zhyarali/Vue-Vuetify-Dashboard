@@ -85,27 +85,28 @@
 
         methods: {
             next() {
-                if (!this.validEmail(this.identifier)) {
-                    this.error = 'ئیمەیڵی دروست بنوسە'
-                    this.$refs.input.focus()
-                    return
-                } else {
-                    this.error = null
-                    if (this.password == "") {
-                        this.passErr = 'تکایە بەبەتاڵی جێی مەهێڵە'
-                        this.$refs.pass.focus()
-                    } else {
-                        this.users.forEach(element => {
-                            if (this.identifier === element.email && this.password === element.password) {
-                                localStorage.setItem('storedData', element.token)
-                                this.$router.push('/Dashboard/Home')
-                            } else {
-                                this.error_auth = 'ئیمەیڵ و وشەی نهێنی هەڵەیە !'
-                            }
-                        });
+                this.$router.push('/Dashboard/home')
+                // if (!this.validEmail(this.identifier)) {
+                //     this.error = 'ئیمەیڵی دروست بنوسە'
+                //     this.$refs.input.focus()
+                //     return
+                // } else {
+                //     this.error = null
+                //     if (this.password == "") {
+                //         this.passErr = 'تکایە بەبەتاڵی جێی مەهێڵە'
+                //         this.$refs.pass.focus()
+                //     } else {
+                //         this.users.forEach(element => {
+                //             if (this.identifier === element.email && this.password === element.password) {
+                //                 localStorage.setItem('storedData', element.token)
+                //                 this.$router.push('/Dashboard/Home')
+                //             } else {
+                //                 this.error_auth = 'ئیمەیڵ و وشەی نهێنی هەڵەیە !'
+                //             }
+                //         });
 
-                    }
-                }
+                    // }
+                // }
 
 
                 // this.$router.push({ name: 'password' })

@@ -1,279 +1,263 @@
 <template>
-
   <div>
-    <navbar></navbar>
-
-    <v-container>
-      <p>{{addUser.role}}</p>
-
-      <!-- add button -->
-      <v-row>
-        <v-col cols="12" md="">
-          <v-dialog v-model="add_dialog" persistent max-width="400px">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn class="rabar-font" color="primary" dark v-bind="attrs" v-on="on">
-                <v-icon>mdi-account-edit</v-icon>
-                زیادکردنی ئەدمین
-              </v-btn>
-            </template>
-            <v-card class="radius-10">
-              <v-card-title>
-                <span class="rabar-font">گۆڕانکاری</span>
-              </v-card-title>
-              <v-card-text>
-                <v-container>
-                  <v-row>
-
-                    <v-col cols="12">
-                      <v-text-field label="ناو" v-model="addUser.name" class="rabar-font">
-                      </v-text-field>
-                    </v-col>
-
-                    <v-col cols="12">
-                      <v-text-field label="ناوی بەکارهێنەر" v-model="addUser.username" class="rabar-font">
-                      </v-text-field>
-                    </v-col>
-
-                    <v-col cols="12">
-                      <v-text-field label="ئیمەیڵ" v-model="addUser.email" required class="rabar-font"></v-text-field>
-                    </v-col>
-                    <v-col cols="12">
-                      <v-text-field label="وشەی نهێنی" class="rabar-font" required v-model="addUser.password"
-                        :append-icon="show ? 'mdi-eye-off-outline' : 'mdi-eye-outline'" name="password"
-                        :type="show ? 'input' : 'password'" hide-details="auto" @click:append="show = !show">
-
-                      </v-text-field>
-                    </v-col>
-
-                    <v-col cols="12">
-                      <v-select v-model="addUser.role" :items="['admin','user']" class="rabar-font" filled label="دەسەڵات" dense></v-select>
-                    </v-col>
-
-                   
-
-                  </v-row>
-                </v-container>
-
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="add_dialog = false">
-                  Close
-                </v-btn>
-                <v-btn color="blue darken-1" text @click="add_user">
-                  Save
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </v-col>
-      </v-row>
-      <!--  end add button -->
+      <navbar />
+      <v-container class="mt-5 mb-7">
 
 
-      <v-row class="d-flex justify-center">
-        <v-col cols="10" md="4" sm="4" lg="4" v-for="(user,index) in users" :key="user.id">
+           <v-row class="d-flex justify-center mt-5 mb-3">
+            <v-dialog v-model="dialog" max-width="500px">
+                                  <template v-slot:activator="{ on, attrs }">
+                                      <v-btn color="white" style="color:black;" class="mb-2 radius-15  rabar-font"
+                                          v-bind="attrs" v-on="on">
+                                          زیادکردنی بابەت
+                                      </v-btn>
 
-          <!-- users card -->
-          <v-card class="rabar radius-15 ">
 
-            <!-- menu dropdown -->
-            <v-menu bottom left>
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn dark icon v-bind="attrs" v-on="on">
-                  <v-icon>mdi-dots-vertical</v-icon>
-                </v-btn>
-              </template>
 
-              <!-- lists -->
-              <v-list>
+                                  </template>
 
-                <!-- Edit list item -->
+                                  <v-card class="radius-15">
+                                      <v-card-title>
+                                          <span class="rabar-font">{{ formTitle }}</span>
+                                      </v-card-title>
 
-                <v-list-item link>
-                  <v-list-tile>
-                    <v-dialog v-model="edit_dialog" persistent max-width="400px">
-                      <template v-slot:activator="{ on, attrs }">
-                        <p v-bind="attrs" v-on="on" class="rabar-font btn-action">
-                          <v-icon>mdi-account-edit</v-icon>
-                          گۆڕانکاری
-                        </p>
+                                      <v-card-text class="radius-15">
+                                          <v-container>
+
+                                              <v-form>
+                                                  <v-text-field class="rabar-font" append-icon="mdi-format-title"
+                                                      v-model="editedItem.name" label="ناو">
+                                                  </v-text-field>
+
+
+                                                  <v-text-field class="rabar-font" label="ئیمەیڵ"
+                                                      v-model="editedItem.email" append-icon="mdi-email">
+                                                  </v-text-field>
+
+
+                                              </v-form>
+                                          </v-container>
+                                      </v-card-text>
+
+                                      <v-card-actions>
+                                          <v-spacer></v-spacer>
+                                          <v-btn color="blue darken-1" text @click="close">
+                                              Cancel
+                                          </v-btn>
+                                          <v-btn color="blue darken-1" text @click="save">
+                                              Save
+                                          </v-btn>
+                                      </v-card-actions>
+                                  </v-card>
+                              </v-dialog>
+           </v-row>
+
+
+          <v-row class="d-flex justify-center">
+              <v-col cols="11">
+
+                  <v-data-table :headers="headers" :search="search" :items="desserts" sort-by="calories"
+                      class="elevation-1 rabar-font radius-15">
+
+                      <template v-slot:top>
+                          <v-toolbar flat>
+
+                              <v-row>
+                                  <v-col cols="12" md="10">
+                                      <v-text-field dark class="rabar-font " v-model="search"
+                                          append-icon="mdi-magnify" label="بگەڕێ" hide-details></v-text-field>
+                                  </v-col>
+                              </v-row>
+
+                              <v-spacer></v-spacer>
+                             
+                              <v-dialog v-model="dialogDelete" max-width="500px">
+                                  <v-card>
+                                      <v-card-title class="text-h5">Are you sure you want to delete this item?
+                                      </v-card-title>
+                                      <v-card-actions>
+                                          <v-spacer></v-spacer>
+                                          <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
+                                          <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+                                          <v-spacer></v-spacer>
+                                      </v-card-actions>
+                                  </v-card>
+                              </v-dialog>
+                          </v-toolbar>
                       </template>
-                      <v-card class="rabar-font">
-                        <v-card-title>
-                          <span class="rabar-font">گۆڕانکاری</span>
-                        </v-card-title>
-                        <v-card-text>
-                          <v-container>
-                            <v-row>
+                      <template v-slot:item.edit="{ item }">
+                          <v-icon small class="mr-2" @click="editItem(item)">
+                              mdi-pencil
+                          </v-icon>
 
-                              <v-col cols="12">
-                                <v-text-field label="ناو" v-model="user.name" class="rabar-font">
-                                </v-text-field>
-                              </v-col>
-
-                              <v-col cols="12">
-                                <v-text-field label="ناوی بەکارهێنەر" v-model="user.username" class="rabar-font">
-                                </v-text-field>
-                              </v-col>
-
-                              <v-col cols="12">
-                                <v-text-field label="ئیمەیڵ" v-model="user.email" required class="rabar-font">
-                                </v-text-field>
-                              </v-col>
-                              <v-col cols="12">
-                                <v-text-field label="وشەی نهێنی" v-model="user.password" class="rabar-font" required
-                                  :append-icon="show ? 'mdi-eye-off-outline' : 'mdi-eye-outline'" name="password"
-                                  :type="show ? 'input' : 'password'" hide-details="auto" @click:append="show = !show">
-
-                                </v-text-field>
-                              </v-col>
-
-                              <v-col cols="12">
-                                  <v-select v-model="user.role" :items="['admin','user']" class="rabar-font" filled label="دەسەڵات" dense></v-select>
-                             </v-col>
-
-                            </v-row>
-                          </v-container>
-
-                        </v-card-text>
-                        <v-card-actions>
-                          <v-spacer></v-spacer>
-                          <v-btn color="blue darken-1" text @click="edit_dialog = false">
-                            Close
-                          </v-btn>
-                          <v-btn color="blue darken-1" text @click="update_user(index)">
-                            Save
-                          </v-btn>
-                        </v-card-actions>
-                      </v-card>
-                    </v-dialog>
-                  </v-list-tile>
-                </v-list-item>
-
-                <!-- end Edit List item -->
-
-
-                <!-- delete list item -->
-                <v-list-item link>
-                  <v-list-item-title>
-                    <v-dialog v-model="delete_dialog" persistent max-width="290">
-                      <template v-slot:activator="{ on, attrs }">
-                        <p v-bind="attrs" v-on="on" class="rabar-font btn-action">
-                          <v-icon>mdi-delete</v-icon>
-
-                          سڕینەوە
-                        </p>
                       </template>
-                      <v-card class="rabar-font">
-                        <v-card-title class="text-h5">
-                          ئاگاداربە !
-                        </v-card-title>
-                        <v-card-text>ئایا دڵنیایی دەتەوێ ئەم بەکارهێنەرە بسڕیتەوە ؟</v-card-text>
-                        <v-card-actions>
-                          <v-spacer></v-spacer>
-                          <v-btn color="red darken-1" text @click="delete_dialog = false">
-                            نەخێر
-                          </v-btn>
-                          <v-btn color="green darken-1" text @click="delete_user(user.id)">
-                            بەڵێ
-                          </v-btn>
-                        </v-card-actions>
-                      </v-card>
-                    </v-dialog>
-                  </v-list-item-title>
-                </v-list-item>
-                <!-- end delete list item -->
+                      <template v-slot:item.delete="{item}">
+                          <v-icon small @click="deleteItem(item)">
+                              mdi-delete
+                          </v-icon>
+                      </template>
+                  </v-data-table>
+              </v-col>
+          </v-row>
 
-
-              </v-list>
-              <!-- end list -->
-            </v-menu>
-            <!--  end menu dropdown -->
-
-            <div class="d-flex justify-center">
-              <v-icon x-large color="deep-purple">mdi-account</v-icon>
-            </div>
-
-            <v-card-title class="d-flex justify-center" style="font-size:15px">
-
-              {{user.name}}
-            </v-card-title>
-            <v-card-text class="text-center">
-              <v-icon color="blue-grey">mdi-email</v-icon>
-              {{user.email}}
-            </v-card-text>
-            <br>
-
-          </v-card>
-
-          <!-- end card -->
-
-        </v-col>
-      </v-row>
-
-      <v-row>
-        <v-col cols="" md="">
-          <!-- <p>{{test}}</p>
-           <h4>{{this.$store.state.users}}</h4> -->
-        </v-col>
-      </v-row>
-    </v-container>
-      <br><br><br><br>
-    <dashboardFooter/>
+      </v-container>
+      
+      <dashboardFooter/>
   </div>
 </template>
 
 
+
+
 <script>
   import navbar from '../../layout/Dashboard/nav.vue'
-    import dashboardFooter from '../../layout/Dashboard/dashboardFooter.vue'
+  import dashboardFooter from '../../layout/Dashboard/dashboardFooter.vue'
   export default {
-    data() {
-      return {
-        users: this.$store.getters.getUser,
-        add_dialog:false,
-        delete_dialog: false,
-        edit_dialog: false,
-        show: false,
-        test: [],
-        addUser: {
-          'id': 3,
-          'name': '',
-          'username': '',
-          'email': '',
-          'password': '',
-          'token': 'user',
-          'post': 0,
-          'role': ''
-        }
+      components: {
+          navbar,dashboardFooter
+      },
+      data: () => ({
+          rules: [
+              value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!',
+          ],
+          search: '',
+          dialog: false,
+          dialogDelete: false,
+          headers: [{
+                  text: 'ناو',
+                  align: 'start',
+                  sortable: false,
+                  value: 'name',
+              },
+              {
+                  text: 'ئیمەیڵ',
+                  value: 'email',
+              },
 
-      }
-    },
-    components: {
-      navbar,dashboardFooter
-    },
-    methods: {
-      delete_user(id) {
-        this.users = this.users.filter(x => x.id != id)
-        this.users.splice(id)
+              {
+                  text: 'گۆڕانکاری',
+                  value: 'edit',
+                  sortable: false
+              },
+              {
+                  text: 'سڕینەوە',
+                  value: 'delete',
+                  sortable: false
+              },
+
+          ],
+          desserts: [],
+          editedIndex: -1,
+          editedItem: {
+              name: '',
+              email: '',
+          },
+          defaultItem: {
+            name: '',
+              email: '',
+          },
+      }),
+
+      computed: {
+          formTitle() {
+              return this.editedIndex === -1 ? 'زیادکردن' : 'گۆڕانکاری '
+          },
+ 
       },
-      update_user(id) {
-        this.$store.state.users[id] = this.users[id]
-        this.edit_dialog=false
+
+      watch: {
+          dialog(val) {
+              val || this.close()
+          },
+          dialogDelete(val) {
+              val || this.closeDelete()
+          },
       },
-      add_user() {
-        let user = this.addUser
-        this.users.push(user)
-        this.add_dialog=false
-      }
-    },
+
+      created() {
+          this.initialize()
+      },
+
+      methods: {
+          initialize() {
+              this.desserts = [
+                {
+                      name: 'zhyar ali',
+                      email:'zhyar@gmail.com',
+                },
+                {
+                      name: 'garduny',
+                      email:'garduny@gmail.com',
+                },
+
+
+              ]
+          },
+
+          editItem(item) {
+              this.editedIndex = this.desserts.indexOf(item)
+              this.editedItem = Object.assign({}, item)
+              this.dialog = true
+          },
+
+          deleteItem(item) {
+              this.editedIndex = this.desserts.indexOf(item)
+              this.editedItem = Object.assign({}, item)
+              this.dialogDelete = true
+          },
+
+          deleteItemConfirm() {
+              this.desserts.splice(this.editedIndex, 1)
+              this.closeDelete()
+          },
+
+          close() {
+              this.dialog = false
+              this.$nextTick(() => {
+                  this.editedItem = Object.assign({}, this.defaultItem)
+                  this.editedIndex = -1
+              })
+          },
+
+          closeDelete() {
+              this.dialogDelete = false
+              this.$nextTick(() => {
+                  this.editedItem = Object.assign({}, this.defaultItem)
+                  this.editedIndex = -1
+              })
+          },
+
+          save() {
+              if (this.editedIndex > -1) {
+                  
+                  Object.assign(this.desserts[this.editedIndex], this.editedItem)
+              } else {
+                  this.editedItem.postby=this.getUsername
+                  this.desserts.push(this.editedItem)
+              }
+              this.close()
+          },
+      },
+     
   }
 </script>
+
 <style>
-  .btn-action {
-    font-size: 12px !important;
-    position: relative;
-    top: 9px
+  @font-face {
+      font-family: "rabar";
+      src: local("rabar"),
+          url(../../assets/fonts/Rabar_039.ttf) format("truetype");
+  }
+
+  .rabar-font {
+      font-family: "rabar" !important;
+  }
+
+  .radius-15 {
+      border-radius: 15px !important;
+  }
+
+  .textarea {
+      font-size: 15px !important;
   }
 </style>

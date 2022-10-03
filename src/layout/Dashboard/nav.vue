@@ -1,102 +1,58 @@
 <template lang="">
   <div>
 
-    <v-app-bar app color="zhyar" class="navbar">
+    <v-app-bar app  class="navbar">
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar flat color="zhyar">
 
+            <v-spacer></v-spacer>
+
+
+
 
         <v-spacer></v-spacer>
 
-        <v-tooltip bottom >
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn v-for="(user, index) in getUsername" :key="index" to="/Dashboard/profile" icon class="mx-2 account "
-              style="width:80px" v-bind="attrs" v-on="on">
 
-              <v-badge bordered bottom color="deep-purple accent-4" dot class="mx-2" offset-x="10" offset-y="10">
-                <v-avatar size="30">
-                  <v-img :src="user.logo"></v-img>
-                </v-avatar>
-              </v-badge>
-              <span>{{user.name}}</span>
-            </v-btn>
-          </template>
-          <span class="rabar-font">پڕۆفایل</span>
-        </v-tooltip>
 
         <!-- <v-btn to="/Dashboard/setting" icon>
           <v-icon>mdi-cog</v-icon>
         </v-btn> -->
 
 
-<!-- notification -->
 
-         <div class="text-center">
-    <v-menu
-      v-model="menu"
-      :close-on-content-click="false"
-      :nudge-width="200"
-      offset-y
-    >
-      <template v-slot:activator="{ on, attrs }">
-
-          <v-badge
-        :content="messages"
-        :value="messages"
-        color="deep-purple"
-        overlap
-      >
-        <v-icon  v-bind="attrs" dark
-        v-on="on">
-          mdi-bell
-        </v-icon>
-      </v-badge>
-        
-      </template>
-
-      <v-card>
-         <v-list three-line>
-      <template v-for="(item, index) in notification">
-        <v-subheader
-          v-if="item.header"
-          :key="item.header"
-          v-text="item.header"
-        ></v-subheader>
-
-        <v-divider
-          v-else-if="item.divider"
-          :key="index"
-          :inset="item.inset"
-        ></v-divider>
-
-        <v-list-item
-          v-else
-          :key="item.title"
+        <v-menu offset-y rounded  >
+      <template v-slot:activator="{ on, attrslang }">
+        <v-btn
+        icon
+          v-bind="attrslang"
+          v-on="on"
         >
-          <v-list-item-avatar>
-            <v-img :src="item.avatar"></v-img>
-          </v-list-item-avatar>
 
-          <v-list-item-content>
-            <v-list-item-title v-html="item.title"></v-list-item-title>
-            <v-list-item-subtitle v-html="item.subtitle"></v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
+
+          <v-icon>mdi-cog</v-icon>
+        </v-btn>
       </template>
-    </v-list>
-
-      </v-card>
-    </v-menu>
-  </div>
-
-
-<!-- end notification -->
-
-
-        <v-dialog v-model="dialog" persistent max-width="290">
+      <v-list style="text-align-last:center">
+        <v-list-item link>
+          <v-tooltip bottom >
           <template v-slot:activator="{ on, attrs }">
-            <v-btn icon v-bind="attrs" v-on="on">
+            <v-btn to="/Dashboard/profile" icon class="mx-2 account "
+             v-bind="attrs" v-on="on">
+              
+              <v-icon>mdi-account</v-icon>
+
+            </v-btn>
+          </template>
+          <span class="rabar-font">پڕۆفایل</span>
+        </v-tooltip>
+        </v-list-item>
+
+
+        <v-list-item link>
+          <v-dialog v-model="dialog" persistent max-width="290">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn icon v-bind="attrs" v-on="on" class="mx-2">
               <v-icon>mdi-logout-variant</v-icon>
             </v-btn>
           </template>
@@ -117,6 +73,54 @@
           </v-card>
         </v-dialog>
 
+        </v-list-item>
+
+
+        <v-list-item link>
+          <v-menu offset-y rounded open-on-hover >
+      <template v-slot:activator="{ on, attrslang }">
+        <v-btn
+          color="deep-purple"
+          class="white--text"
+          v-bind="attrslang"
+          v-on="on"
+        >
+          Language
+          <v-icon v-if="lang_menu">mdi-menu-up</v-icon>
+          <v-icon v-else>mdi-menu-down</v-icon>
+        </v-btn>
+      </template>
+      <v-list style="text-align-last:center">
+        <v-list-item
+
+          link
+        >
+          <v-list-item-title >English</v-list-item-title>
+        </v-list-item>
+        <v-list-item
+
+          link
+        >
+          <v-list-item-title >Kurdish</v-list-item-title>
+        </v-list-item>
+        <v-list-item
+
+          link
+        >
+          <v-list-item-title >Arabic</v-list-item-title>
+        </v-list-item>
+      </v-list>
+</v-menu>
+        </v-list-item>
+
+      
+      </v-list>
+</v-menu>
+
+
+
+
+        
         
 
       </v-toolbar>
@@ -221,55 +225,6 @@
       ],
       backcolor: '#8366FC',
       textcolor: '#FFFFFF',
-      swatches: [
-        "#343A40",
-        "#27293d",
-        "#DDDDDD",
-        "#16C79A",
-        "#7579E7",
-        "#52575D",
-        "#1B6CA8",
-        "#30475E",
-        "#4D80E4",
-        "#F35588",
-        "#FFFFFF",
-      ],
-
-
-       notification: [
-        { header: 'Today' },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-          title: 'Brunch this weekend?',
-          subtitle: `<span class="text--primary">Ali Connors</span> &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
-        },
-        { divider: true, inset: true },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
-          title: 'Summer BBQ <span class="grey--text text--lighten-1">4</span>',
-          subtitle: `<span class="text--primary">to Alex, Scott, Jennifer</span> &mdash; Wish I could come, but I'm out of town this weekend.`,
-        },
-        { divider: true, inset: true },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-          title: 'Oui oui',
-          subtitle: '<span class="text--primary">Sandra Adams</span> &mdash; Do you have Paris recommendations? Have you ever been?',
-        },
-        { divider: true, inset: true },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
-          title: 'Birthday gift',
-          subtitle: '<span class="text--primary">Trevor Hansen</span> &mdash; Have any ideas about what we should get Heidi for her birthday?',
-        },
-        { divider: true, inset: true },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg',
-          title: 'Recipe to try',
-          subtitle: '<span class="text--primary">Britta Holt</span> &mdash; We should eat this: Grate, Squash, Corn, and tomatillo Tacos.',
-        },
-      ],
-
-
 
 
 
@@ -502,9 +457,9 @@
 
   /* account */
   .account {
-    border-radius: 10px !important;
-    padding-left: 20px !important;
-    padding-right: 10px !important;
+    /* border-radius: 10px !important; */
+    /* padding-left: 20px !important;
+    padding-right: 10px !important; */
     font-size: 12px !important;
   }
 

@@ -73,11 +73,11 @@
     },
     mounted() {
 
-      if (
-        localStorage.getItem("storedData") == null
-      ) {
-        this.$router.push("/Dashboard/login");
-      }
+      // if (
+      //   localStorage.getItem("storedData") == null
+      // ) {
+      //   this.$router.push("/Dashboard/login");
+      // }
 
     }
   }
